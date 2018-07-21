@@ -47,9 +47,12 @@ $(".bottom-box").on('click', function(event){
   var currentQuality = $(event.target).siblings('.quality').text();
   var cardHTML = $(event.target).closest('.card-container');
   var cardID = cardHTML[0].id;
+  var cardObj = JSON.parse(localStorage.getItem(cardID));
   console.log(cardID);
-  if (event.target.className === "upvote" || event.target.className === "downvote"){
-    upvoteFunction();
-  }
-  if (event.target.className === "delete-button") { deleteFunction() }
+  if (event.target.className === "delete-button") { deleteFunction(event, cardID) }
 });
+
+function deleteFunction(e, id) {
+  localStorage.removeItem(id);
+  $(e.target).closest('.card-container').remove();
+}
