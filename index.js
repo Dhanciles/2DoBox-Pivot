@@ -1,13 +1,11 @@
 var qualityVariable = "swill";
 
-$.each(localStorage, function(key) {
-  if (this !== undefined) {
-    var cardData = JSON.parse(this);
-    console.log(key);
-    $( ".bottom-box" ).prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
+for (i = 0; i < localStorage.length; i ++) {
+  var key = localStorage.key(i);
+  var cardData = JSON.parse(localStorage.getItem(key));
+  console.log(key);
+  $(".bottom-box").prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
   }
-});
-console.log('hello');
 
 function newCard(id , title , body , quality) {
   return `<div id=${id} class="card-container">
