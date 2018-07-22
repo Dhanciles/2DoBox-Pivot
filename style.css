@@ -24,7 +24,7 @@ h1{
   margin-bottom:  30px;
 }
 
-.idea {
+.title-highlight {
   color: #00a79d;
 }
 
@@ -36,7 +36,7 @@ input {
   width: 45%;
   margin: 0 auto 25px;
   font-family: 'Open Sans', sans-serif;
-  font-size: 16px; 
+  font-size: 16px;
 }
 
 .search-input {
