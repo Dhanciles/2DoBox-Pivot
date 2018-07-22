@@ -2,7 +2,7 @@
 for (i = 0; i < localStorage.length; i ++) {
   var key = localStorage.key(i);
   var cardData = JSON.parse(localStorage.getItem(key));
-  $(".bottom-box").prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
+  $(".bottom-box").prepend(newCard(key, cardData.title, cardData.body, cardData.importance));
 };
 
 //Event listeners
@@ -10,16 +10,17 @@ $('.save-btn').on('click', saveBtn);
 $(".bottom-box").on('click', eventDelegation);
 $('form').on('keyup', enableSave);
 $('.bottom-box').on('keyup', saveEdit);
+$('.upvote').on('click', increaseImportance); 
 
 //Functions
-function newCard(id , title , body , quality) {
+function newCard(id , title , body , importance) {
   return `<div id=${id} class="card-container">
             <h4 class="title-of-card" contenteditable="true">${title}</h4>
             <button class="delete-button"></button>
             <p class="body-of-card" contenteditable="true">${body}</p>
             <button class="upvote"></button>
             <button class="downvote"></button>
-            <p class="quality">importance:<span class="qualityVariable"> ${quality}</span>
+            <p class="importance">importance:<span class="importanceVariable"> ${importance}</span>
             </p>
             <hr>
             </div>`;
@@ -29,7 +30,7 @@ function cardObject() {
   return {
     title: $('.title-input').val(),
     body: $('.body-input').val(),
-    quality: "swill",
+    importance: 'Normal',
     id: Date.now()
   }
 };
@@ -42,7 +43,7 @@ function localStoreCard(card) {
 function saveBtn(event) {
   event.preventDefault();
   var cardObj = cardObject();
-  var card = newCard(cardObj.id, cardObj.title, cardObj.body, cardObj.quality);
+  var card = newCard(cardObj.id, cardObj.title, cardObj.body, cardObj.importance);
   $( ".bottom-box" ).prepend(card);
   localStoreCard(cardObj);
   $('form')[0].reset();
@@ -50,7 +51,7 @@ function saveBtn(event) {
 };
 
 function eventDelegation(event){
-  var currentQuality = $(event.target).siblings('.quality').text();
+  var currentImportance = $(event.target).siblings('.importance').text();
   var cardHTML = $(event.target).closest('.card-container');
   var cardID = cardHTML[0].id;
   var cardObj = JSON.parse(localStorage.getItem(cardID));
@@ -72,6 +73,19 @@ function enableSave(event) {
     $('.save-btn').attr('disabled', '');
   }
 };
+
+function increaseImportance(event) {
+  var html = $(event.target).closest('.card-container');
+  var id = html[0].id;
+  var importanceLevels = ['None', 'Low', 'Normal', 'High', 'Crtitical'];  
+  console.log($(event.target).hasClass('upvote'));
+  var card = JSON.parse(localStorage.getItem(id)); 
+  console.log(card); 
+  card.importance = importanceLevels[($.inArray($(event.target).parent().parent().find('.importanceVariable').text(), importanceLevels) + 1)];
+  console.log($(event.target).parent().parent().find('.importanceVariable').text()); 
+  html.closest('.importanceVariable').text(card.importance)
+  localStorage.setItem(id, JSON.stringify(card)); 
+}
 
 function saveEdit(event) {
   var html = $(event.target).closest('.card-container');
