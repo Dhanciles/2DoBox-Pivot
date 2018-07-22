@@ -19,7 +19,7 @@ function newCard(id , title , body , quality) {
             <p class="body-of-card" contenteditable="true">${body}</p>
             <button class="upvote"></button>
             <button class="downvote"></button>
-            <p class="quality">quality:<span class="qualityVariable">${quality}</span>
+            <p class="quality">importance:<span class="qualityVariable"> ${quality}</span>
             </p>
             <hr>
             </div>`;
