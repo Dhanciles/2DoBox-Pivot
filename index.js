@@ -10,7 +10,8 @@ $('.save-btn').on('click', saveBtn);
 $(".bottom-box").on('click', eventDelegation);
 $('form').on('keyup', enableSave);
 $('.bottom-box').on('keyup', saveEdit);
-$('.upvote').on('click', increaseImportance); 
+$('.upvote').on('click', increaseImportance);
+$('.downvote').on('click', decreaseImportance);  
 
 //Functions
 function newCard(id , title , body , importance) {
@@ -80,19 +81,28 @@ function increaseImportance(event) {
   var importanceLevels = ['None', 'Low', 'Normal', 'High', 'Crtitical'];  
   var card = JSON.parse(localStorage.getItem(id)); 
   var index = importanceLevels.indexOf(card.importance);
-  if (index === 4) {
-    return true; 
-  }
+  if (index === 4) {return true}
   card.importance = importanceLevels[index + 1]; 
-  console.log(id);  
   html.find('.importanceVariable').text(card.importance);
   localStorage.setItem(id, JSON.stringify(card)); 
+};
+
+function decreaseImportance(event) {
+  var html = $(event.target).closest('.card-container'); 
+  var id = html.attr('id'); 
+  var importanceLevels = ['None', 'Low', 'Normal', 'High', 'Crtitical']; 
+  var card = JSON.parse(localStorage.getItem(id)); 
+  var index = importanceLevels.indexOf(card.importance); 
+  if (index === 0) {return true}
+  card.importance = importanceLevels[index - 1]; 
+  console.log(card.importance); 
+  html.find('.importanceVariable').text(card.importance); 
+  localStorage.setItem(id, JSON.stringify(card))
 }
 
 function saveEdit(event) {
   var html = $(event.target).closest('.card-container');
   var id = html[0].id;
-  console.log($(event.target).hasClass('body-of-card'));
   var card = JSON.parse(localStorage.getItem(id));
   if (event.target.className === 'title-of-card') { card.title = $(event.target).text()}
   if (event.target.className === 'body-of-card') { card.body = $(event.target).text()}
