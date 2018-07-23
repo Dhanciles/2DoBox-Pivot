@@ -78,21 +78,21 @@ function enableSave(event) {
 
 function increaseImportance(event, id, card) {
   var html = $(event.target).closest('.card-container');
-  var importanceLevels = ['None', 'Low', 'Normal', 'High', 'Crtitical'];  
+  var importanceLevels = ['None', 'Low', 'Normal', 'High', 'Crtitical'];
   var index = importanceLevels.indexOf(card.importance);
   if (index === 4) {return true}
-  card.importance = importanceLevels[index + 1]; 
+  card.importance = importanceLevels[index + 1];
   html.find('.importanceVariable').text(card.importance);
-  localStorage.setItem(id, JSON.stringify(card)); 
+  localStorage.setItem(id, JSON.stringify(card));
 };
 
 function decreaseImportance(event, id, card) {
-  var html = $(event.target).closest('.card-container'); 
-  var importanceLevels = ['None', 'Low', 'Normal', 'High', 'Crtitical']; 
-  var index = importanceLevels.indexOf(card.importance); 
+  var html = $(event.target).closest('.card-container');
+  var importanceLevels = ['None', 'Low', 'Normal', 'High', 'Crtitical'];
+  var index = importanceLevels.indexOf(card.importance);
   if (index === 0) {return true}
-  card.importance = importanceLevels[index - 1]; 
-  html.find('.importanceVariable').text(card.importance); 
+  card.importance = importanceLevels[index - 1];
+  html.find('.importanceVariable').text(card.importance);
   localStorage.setItem(id, JSON.stringify(card))
 }
 
@@ -113,7 +113,6 @@ function cardSearch(event) {
   var title = $(this).find('.title-of-card').text().toLowerCase();
   var body = $(this).find('.body-of-card').text().toLowerCase();
   var filter = $('.search-input').val().toLowerCase();
-  console.log(title);
   if (!title.includes(filter) && !body.includes(filter)) { $(this).hide() }
   else { $(this).show() }
 }
