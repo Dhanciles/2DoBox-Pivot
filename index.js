@@ -10,9 +10,7 @@ $('.save-btn').on('click', saveBtn);
 $(".bottom-box").on('click', eventDelegation);
 $('form').on('keyup', enableSave);
 $('.bottom-box').on('keyup', saveEdit);
-$('.upvote').on('click', increaseImportance);
-$('.downvote').on('click', decreaseImportance);  
-
+ 
 //Functions
 function newCard(id , title , body , importance) {
   return `<div id=${id} class="card-container">
@@ -56,7 +54,9 @@ function eventDelegation(event){
   var cardHTML = $(event.target).closest('.card-container');
   var cardID = cardHTML[0].id;
   var cardObj = JSON.parse(localStorage.getItem(cardID));
-  if (event.target.className === "delete-button") { deleteFunction(event, cardID) }
+  if (event.target.className === 'delete-button') {deleteFunction(event, cardID)}
+  if (event.target.className === 'upvote') {increaseImportance(event, cardID, cardObj)}
+  if (event.target.className === 'downvote') {decreaseImportance(event, cardID, cardObj)}
 };
 
 function deleteFunction(e, id) {
@@ -75,11 +75,9 @@ function enableSave(event) {
   }
 };
 
-function increaseImportance(event) {
+function increaseImportance(event, id, card) {
   var html = $(event.target).closest('.card-container');
-  var id = html.attr('id'); 
   var importanceLevels = ['None', 'Low', 'Normal', 'High', 'Crtitical'];  
-  var card = JSON.parse(localStorage.getItem(id)); 
   var index = importanceLevels.indexOf(card.importance);
   if (index === 4) {return true}
   card.importance = importanceLevels[index + 1]; 
@@ -87,15 +85,12 @@ function increaseImportance(event) {
   localStorage.setItem(id, JSON.stringify(card)); 
 };
 
-function decreaseImportance(event) {
+function decreaseImportance(event, id, card) {
   var html = $(event.target).closest('.card-container'); 
-  var id = html.attr('id'); 
   var importanceLevels = ['None', 'Low', 'Normal', 'High', 'Crtitical']; 
-  var card = JSON.parse(localStorage.getItem(id)); 
   var index = importanceLevels.indexOf(card.importance); 
   if (index === 0) {return true}
   card.importance = importanceLevels[index - 1]; 
-  console.log(card.importance); 
   html.find('.importanceVariable').text(card.importance); 
   localStorage.setItem(id, JSON.stringify(card))
 }
