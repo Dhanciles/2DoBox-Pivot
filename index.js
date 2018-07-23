@@ -75,14 +75,12 @@ function enableSave(event) {
 };
 
 function increaseImportance(event) {
-  var html = $(event.target).closest('.card-container');
-  var id = html[0].id;
+  var html = $(event.target).closest('.importanceVariable');
+  var id = $(event.target).attr('id'); 
   var importanceLevels = ['None', 'Low', 'Normal', 'High', 'Crtitical'];  
   console.log($(event.target).hasClass('upvote'));
   var card = JSON.parse(localStorage.getItem(id)); 
-  console.log(card); 
-  card.importance = importanceLevels[($.inArray($(event.target).parent().parent().find('.importanceVariable').text(), importanceLevels) + 1)];
-  console.log($(event.target).parent().parent().find('.importanceVariable').text()); 
+  card.importance = importanceLevels.indexOf(card.importance) + 1; 
   html.closest('.importanceVariable').text(card.importance)
   localStorage.setItem(id, JSON.stringify(card)); 
 }
