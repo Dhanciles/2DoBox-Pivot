@@ -20,7 +20,7 @@ function newCard(id , title , body , importance) {
             <p class="body-of-card" contenteditable="true">${body}</p>
             <button class="upvote"></button>
             <button class="downvote"></button>
-            <p class="importance">importance:<span class="importanceVariable"> ${importance}</span>
+            <p class="importance">importance: <span class="importanceVariable">${importance}</span>
             </p>
             <hr>
             </div>`;
@@ -75,13 +75,17 @@ function enableSave(event) {
 };
 
 function increaseImportance(event) {
-  var html = $(event.target).closest('.importanceVariable');
-  var id = $(event.target).attr('id'); 
+  var html = $(event.target).closest('.card-container');
+  var id = html.attr('id'); 
   var importanceLevels = ['None', 'Low', 'Normal', 'High', 'Crtitical'];  
-  console.log($(event.target).hasClass('upvote'));
   var card = JSON.parse(localStorage.getItem(id)); 
-  card.importance = importanceLevels.indexOf(card.importance) + 1; 
-  html.closest('.importanceVariable').text(card.importance)
+  var index = importanceLevels.indexOf(card.importance);
+  if (index === 4) {
+    return true; 
+  }
+  card.importance = importanceLevels[index + 1]; 
+  console.log(id);  
+  html.find('.importanceVariable').text(card.importance);
   localStorage.setItem(id, JSON.stringify(card)); 
 }
 
