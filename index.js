@@ -10,7 +10,8 @@ $('.save-btn').on('click', saveBtn);
 $(".bottom-box").on('click', eventDelegation);
 $('form').on('keyup', enableSave);
 $('.bottom-box').on('keyup', saveEdit);
- 
+$('.search-input').on('keyup',filterCards);
+
 //Functions
 function newCard(id , title , body , importance) {
   return `<div id=${id} class="card-container">
@@ -103,3 +104,16 @@ function saveEdit(event) {
   if (event.target.className === 'body-of-card') { card.body = $(event.target).text()}
   localStorage.setItem(id,JSON.stringify(card));
 };
+
+function filterCards(event) {
+  $('.card-container').each(cardSearch);
+}
+
+function cardSearch(event) {
+  var title = $(this).find('.title-of-card').text().toLowerCase();
+  var body = $(this).find('.body-of-card').text().toLowerCase();
+  var filter = $('.search-input').val().toLowerCase();
+  console.log(title);
+  if (!title.includes(filter) && !body.includes(filter)) { $(this).hide() }
+  else { $(this).show() }
+}
