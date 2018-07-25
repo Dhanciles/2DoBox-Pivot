@@ -12,6 +12,7 @@ $('form').on('keyup', enableSave);
 $('.bottom-box').on('keyup', saveEdit);
 $('.search-input').on('keyup',filterCards);
 $('.filter-buttons').on('click',filterButton);
+$('.');
 
 //Functions
 function newCard(id , title , body , importance) {
