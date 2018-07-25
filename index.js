@@ -8,7 +8,7 @@ $('form').on('keyup', enableSave);
 $('.bottom-box').on('keyup', saveEdit);
 $('.search-input').on('keyup',filterCards);
 $('.filter-buttons').on('click',filterButton);
-
+$('.show-all').on('click', showAll);
 //Functions
 function newCard(id , title , body , importance) {
   return `<div id=${id} class="card-container">
@@ -33,12 +33,11 @@ function cardObject() {
 };
 
 function loadCards(){
-  if (localStorage.length > 10) { var count = 10}
-  else {var count = localStorage.length}
-  for (i = 0; i < count; i ++) {
+  for (i = 0; i < localStorage.length; i ++) {
     var key = localStorage.key(i);
     var cardData = JSON.parse(localStorage.getItem(key));
-    $(".bottom-box").prepend(newCard(key, cardData.title, cardData.body, cardData.importance));
+    $('.bottom-box').prepend(newCard(cardData.id, cardData.title, cardData.body, cardData.importance));
+    if (i >= 10){$(`#${cardData.id}`).hide()}
   };
 }
 
@@ -145,3 +144,9 @@ function filterByClass(elementClass) {
     else {$(card).hide()}
   });
 }
+
+function showAll(event) {
+  event.preventDefault();
+  $('.card-container').show();
+}
+
