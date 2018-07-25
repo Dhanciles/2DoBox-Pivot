@@ -11,6 +11,7 @@ $(".bottom-box").on('click', eventDelegation);
 $('form').on('keyup', enableSave);
 $('.bottom-box').on('keyup', saveEdit);
 $('.search-input').on('keyup',filterCards);
+$('.filter-buttons').on('click',filterButton);
 
 //Functions
 function newCard(id , title , body , importance) {
@@ -115,4 +116,22 @@ function cardSearch(event) {
   var filter = $('.search-input').val().toLowerCase();
   if (!title.includes(filter) && !body.includes(filter)) { $(this).hide() }
   else { $(this).show() }
+}
+
+function filterButton(event) {
+  event.preventDefault();
+  if (event.target.className !== "filter-buttons") {
+    filterByClass(event.target.className);
+  }
+  if (event.target.className === "reset-filter") {
+    $('.card-container').show();
+  }
+}
+
+function filterByClass(elementClass) {
+  $('.card-container').each(function(index, card) {
+    var importance = $(card).find('.importanceVariable').text();
+    if (importance === elementClass){ $(card).show() }
+    else {$(card).hide()}
+  });
 }
