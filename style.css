@@ -134,7 +134,33 @@ button {
   width: 20px;
 }
 
-@media(max-width: 640px){
+.filter-buttons {
+  display: flex; 
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 5px auto;  
+  width: 45.5%;
+}
+
+.filter-buttons button {
+  background-color: #00a79d;
+  border: none;
+  color: #fff;
+  width: 15%
+}
+
+.show-all {
+  margin: 0 auto;
+  display: inline-block;
+  width: 45.5%; 
+  background-color: #00a79d;
+  border: none;
+  color: #fff;
+  width: 15%
+}
+
+
+@media screen and(max-width: 640px) {
 
   .card-container {
     width: 85%;
@@ -142,6 +168,25 @@ button {
 
   .search-input {
     border: solid #999 1px;     
+  }
+
+  .filter-buttons {
+  flex-wrap: wrap; 
+  }
+
+  .filter-buttons button {
+    width: 30%;
+    margin-bottom: 5px; 
+  }
+
+  .show-all {
+    width: 20%;
+  }
+}
+
+@media screen and(max-width: 320px) {
+  .filter-buttons button {
+    width: 35%;
   }
 }
 

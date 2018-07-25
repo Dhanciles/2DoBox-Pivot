@@ -9,6 +9,7 @@ $('.bottom-box').on('keyup', saveEdit);
 $('.search-input').on('keyup',filterCards);
 $('.filter-buttons').on('click',filterButton);
 $('.show-all').on('click', showAll);
+
 //Functions
 function newCard(id , title , body , importance, status) {
   return `<div id=${id} class="card-container">
@@ -41,7 +42,6 @@ function loadCards(){
     $('.bottom-box').prepend(newCard(cardData.id, cardData.title, cardData.body, cardData.importance));
     if (i >= 10){$(`#${cardData.id}`).hide()}
     if (cardData.status) { $(`#${cardData.id}`).addClass('complete')}
-    console.log(cardData.status); 
   };
 }
 
@@ -65,7 +65,7 @@ function eventDelegation(event){
   var cardHTML = $(event.target).closest('.card-container');
   var cardID = cardHTML[0].id;
   var cardObj = JSON.parse(localStorage.getItem(cardID));
-  if(event.target.className === 'complete-btn') {markAsComplete(cardHTML, cardObj)}
+  if (event.target.className === 'complete-btn') {markAsComplete(cardHTML, cardObj)}
   if (event.target.className === 'delete-button') {deleteFunction(event, cardID)}
   if (event.target.className === 'upvote') {increaseImportance(event, cardID, cardObj)}
   if (event.target.className === 'downvote') {decreaseImportance(event, cardID, cardObj)}
@@ -141,10 +141,6 @@ function filterButton(event) {
 function filterByClass(elementClass) {
   $('.card-container').each(function(index, card) {
     var importance = $(card).find('.importanceVariable').text();
-    if (importance === 'None') {
-      console.log(importance);
-      console.log($(card).find('.importanceVariable').text());
-    }
     if (importance === elementClass){ $(card).show() }
     else {$(card).hide()}
   });
@@ -157,9 +153,6 @@ function showAll(event) {
 
 function markAsComplete(cardHTML, cardObj) {
   cardHTML.toggleClass('complete');
-  console.log(cardObj.status)
   cardObj.status = !cardObj.status; 
   localStoreCard(cardObj); 
-  console.log(cardObj.status)
-
 }
