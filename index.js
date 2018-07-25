@@ -40,6 +40,8 @@ function loadCards(){
     var cardData = JSON.parse(localStorage.getItem(key));
     $('.bottom-box').prepend(newCard(cardData.id, cardData.title, cardData.body, cardData.importance));
     if (i >= 10){$(`#${cardData.id}`).hide()}
+    if (cardData.status) { $(`#${cardData.id}`).addClass('complete')}
+    console.log(cardData.status); 
   };
 }
 
@@ -155,5 +157,9 @@ function showAll(event) {
 
 function markAsComplete(cardHTML, cardObj) {
   cardHTML.toggleClass('complete');
-  cardObj.status != cardObj.status; 
+  console.log(cardObj.status)
+  cardObj.status = !cardObj.status; 
+  localStoreCard(cardObj); 
+  console.log(cardObj.status)
+
 }
