@@ -1,9 +1,5 @@
 //Load cards from localStorage
-for (i = 0; i < localStorage.length; i ++) {
-  var key = localStorage.key(i);
-  var cardData = JSON.parse(localStorage.getItem(key));
-  $(".bottom-box").prepend(newCard(key, cardData.title, cardData.body, cardData.importance));
-};
+loadCards();
 
 //Event listeners
 $('.save-btn').on('click', saveBtn);
@@ -12,7 +8,7 @@ $('form').on('keyup', enableSave);
 $('.bottom-box').on('keyup', saveEdit);
 $('.search-input').on('keyup',filterCards);
 $('.filter-buttons').on('click',filterButton);
-
+$('.show-all').on('click', showAll);
 //Functions
 function newCard(id , title , body , importance) {
   return `<div id=${id} class="card-container">
@@ -35,6 +31,15 @@ function cardObject() {
     id: Date.now()
   }
 };
+
+function loadCards(){
+  for (i = 0; i < localStorage.length; i ++) {
+    var key = localStorage.key(i);
+    var cardData = JSON.parse(localStorage.getItem(key));
+    $('.bottom-box').prepend(newCard(cardData.id, cardData.title, cardData.body, cardData.importance));
+    if (i >= 10){$(`#${cardData.id}`).hide()}
+  };
+}
 
 function localStoreCard(card) {
   var cardString = JSON.stringify(card);
@@ -79,7 +84,7 @@ function enableSave(event) {
 
 function increaseImportance(event, id, card) {
   var html = $(event.target).closest('.card-container');
-  var importanceLevels = ['None', 'Low', 'Normal', 'High', 'Crtitical'];
+  var importanceLevels = ['None', 'Low', 'Normal', 'High', 'Critical'];
   var index = importanceLevels.indexOf(card.importance);
   if (index === 4) {return true}
   card.importance = importanceLevels[index + 1];
@@ -89,7 +94,7 @@ function increaseImportance(event, id, card) {
 
 function decreaseImportance(event, id, card) {
   var html = $(event.target).closest('.card-container');
-  var importanceLevels = ['None', 'Low', 'Normal', 'High', 'Crtitical'];
+  var importanceLevels = ['None', 'Low', 'Normal', 'High', 'Critical'];
   var index = importanceLevels.indexOf(card.importance);
   if (index === 0) {return true}
   card.importance = importanceLevels[index - 1];
@@ -131,7 +136,17 @@ function filterButton(event) {
 function filterByClass(elementClass) {
   $('.card-container').each(function(index, card) {
     var importance = $(card).find('.importanceVariable').text();
+    if (importance === 'None') {
+      console.log(importance);
+      console.log($(card).find('.importanceVariable').text());
+    }
     if (importance === elementClass){ $(card).show() }
     else {$(card).hide()}
   });
 }
+
+function showAll(event) {
+  event.preventDefault();
+  $('.card-container').show();
+}
+

@@ -16,18 +16,20 @@
         <input class="title-input" type="text" placeholder="Title">
         <input class="body-input" type="text" placeholder="Task">
         <button class="save-btn" disabled>save</button>
-        <div class="filter-buttons">
-          <button class="reset-filter">Reset</button>
-          <button class="None">None</button>
-          <button class="Low">Low</button>
-          <button class="Normal">Normal</button>
-          <button class="High">High</button>
-          <button class="Critical">Critical</button>
-        </div>
       </form>
     </article>
     <input class="search-input" type="text" placeholder="Filter">
-    <article class="bottom-box"> </article>
+    <div role="container for filter buttons" class="filter-buttons">
+      <button class="reset-filter">Reset</button>
+      <button class="None">None</button>
+      <button class="Low">Low</button>
+      <button class="Normal">Normal</button>
+      <button class="High">High</button>
+      <button class="Critical">Critical</button>
+    </div>
+    <button class="show-all">Show all</button>
+    <article class="bottom-box">
+    </article>
   </section>
     <script src="jquery/jquery-3.2.1.js"></script>
     <script src="index.js"></script>
