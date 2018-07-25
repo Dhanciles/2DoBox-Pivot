@@ -70,6 +70,11 @@ input {
   width: 45%;
 }
 
+.complete {
+  background-color: #e5f3f2; 
+  text-decoration: line-through;
+}
+
 h2 {
  color: #6d6e71; 
  display: inline-block;

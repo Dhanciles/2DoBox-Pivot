@@ -10,7 +10,7 @@ $('.search-input').on('keyup',filterCards);
 $('.filter-buttons').on('click',filterButton);
 $('.show-all').on('click', showAll);
 //Functions
-function newCard(id , title , body , importance) {
+function newCard(id , title , body , importance, status) {
   return `<div id=${id} class="card-container">
             <h4 class="title-of-card" contenteditable="true">${title}</h4>
             <button class="delete-button"></button>
@@ -19,6 +19,7 @@ function newCard(id , title , body , importance) {
             <button class="downvote"></button>
             <p class="importance">importance: <span class="importanceVariable">${importance}</span>
             </p>
+            <button class="complete-btn">Complete</button>
             <hr>
             </div>`;
 };
@@ -28,7 +29,8 @@ function cardObject() {
     title: $('.title-input').val(),
     body: $('.body-input').val(),
     importance: 'Normal',
-    id: Date.now()
+    id: Date.now(),
+    status: false
   }
 };
 
@@ -61,6 +63,7 @@ function eventDelegation(event){
   var cardHTML = $(event.target).closest('.card-container');
   var cardID = cardHTML[0].id;
   var cardObj = JSON.parse(localStorage.getItem(cardID));
+  if(event.target.className === 'complete-btn') {markAsComplete(cardHTML, cardObj)}
   if (event.target.className === 'delete-button') {deleteFunction(event, cardID)}
   if (event.target.className === 'upvote') {increaseImportance(event, cardID, cardObj)}
   if (event.target.className === 'downvote') {decreaseImportance(event, cardID, cardObj)}
@@ -150,3 +153,7 @@ function showAll(event) {
   $('.card-container').show();
 }
 
+function markAsComplete(cardHTML, cardObj) {
+  cardHTML.toggleClass('complete');
+  cardObj.status != cardObj.status; 
+}
